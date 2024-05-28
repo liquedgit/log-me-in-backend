@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"io"
 	"log-me-in/database"
 	"log-me-in/model"
@@ -35,7 +34,6 @@ func GetNoteDetailsById(note_id string) (*model.Note, error) {
 
 func CreateNote(form *multipart.Form, user *model.User) (*model.NoteResponseDTO, error) {
 	fileHeaders := form.File["file"]
-	fmt.Println(os.Getwd())
 	cwd, err := os.Getwd()
 	if err != nil {
 		return nil, err
@@ -67,7 +65,7 @@ func CreateNote(form *multipart.Form, user *model.User) (*model.NoteResponseDTO,
 	if err != nil && BASE != nil {
 		return nil, err
 	}
-	uploadedPath := *BASE + "/uploads/" + id + fileName
+	uploadedPath := *BASE + "/uploads/" + fileName
 	note := &model.Note{
 		Id:          id,
 		UserId:      user.Id,

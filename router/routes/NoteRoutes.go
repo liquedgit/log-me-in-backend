@@ -72,4 +72,5 @@ func SetupNoteRoutes(api fiber.Router) {
 
 		return ctx.Status(fiber.StatusCreated).JSON(response)
 	})
+
 }

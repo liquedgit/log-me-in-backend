@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log-me-in/database"
 	"log-me-in/router"
 
@@ -9,12 +8,7 @@ import (
 )
 
 func main() {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Println("Recovered from panic:", r)
-			// Handle the panic or return an error response
-		}
-	}()
+
 	app := fiber.New()
 
 	database.AutoMigrate()
