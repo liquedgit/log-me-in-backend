@@ -4,10 +4,9 @@ import (
 	"log-me-in/jwt"
 )
 
-func GenerateNewToken(id string, role string) (*string, error) {
+func GenerateNewToken(id string) (*string, error) {
 	token := jwt.New(jwt.GetSigningMethod("HS256"))
 	token.Claims["id"] = id
-	token.Claims["role"] = role
 	secretkey, err := GetFromEnv("JWT_SECRET_KEY")
 	if err != nil {
 		return nil, err

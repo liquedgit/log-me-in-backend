@@ -2,11 +2,12 @@ package router
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber/v2"
 	"log-me-in/model"
 	"log-me-in/router/routes"
 	"log-me-in/service"
 	"log-me-in/utils"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRoutes(app *fiber.App) {
@@ -42,9 +43,17 @@ func SetupRoutes(app *fiber.App) {
 			})
 		}
 
-		if requestDTO.Password == requestDTO.ConfirmPassword {
+		if requestDTO.Password != requestDTO.ConfirmPassword {
 			return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "Password and confirm password must be the same",
+			})
+		}
+
+		_, err := service.GetUserByUsername(requestDTO.Username)
+
+		if err == nil {
+			return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Username must be unique",
 			})
 		}
 
@@ -69,7 +78,7 @@ func SetupRoutes(app *fiber.App) {
 				"error": err.Error(),
 			})
 		}
-		fmt.Println(jwtObj.Claims["role"])
+		fmt.Println(jwtObj.Claims["id"])
 		return ctx.SendString(token)
 	})
 	routes.SetupUserRoutes(api)

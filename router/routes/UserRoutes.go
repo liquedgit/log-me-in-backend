@@ -5,5 +5,4 @@ import (
 )
 
 func SetupUserRoutes(router fiber.Router) {
-	router.Get("/")
 }

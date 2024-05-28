@@ -1,9 +1,10 @@
 package service
 
 import (
+	"log-me-in/utils"
+
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
-	"log-me-in/utils"
 )
 
 func AuthLogin(ctx *fiber.Ctx, username string, password []byte) error {
@@ -20,7 +21,7 @@ func AuthLogin(ctx *fiber.Ctx, username string, password []byte) error {
 		})
 	}
 
-	strToken, err := utils.GenerateNewToken(user.Id, user.Role)
+	strToken, err := utils.GenerateNewToken(user.Id)
 	if err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
