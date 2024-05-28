@@ -1,10 +1,11 @@
 package database
 
 import (
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"log-me-in/model"
 	"log-me-in/utils"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var instance *gorm.DB
@@ -26,5 +27,5 @@ func GetConnection() *gorm.DB {
 
 func AutoMigrate() {
 	db := GetConnection()
-	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.User{}, &model.Note{})
 }

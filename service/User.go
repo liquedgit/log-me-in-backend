@@ -1,16 +1,31 @@
 package service
 
 import (
-	"github.com/google/uuid"
-	"golang.org/x/crypto/bcrypt"
+	"fmt"
 	"log-me-in/database"
 	"log-me-in/model"
+
+	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func GetUserByUsername(username string) (*model.User, error) {
 	db := database.GetConnection()
 	var user model.User
 	result := db.Where("username = ?", username).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
+	} else {
+		return &user, nil
+	}
+}
+
+func GetUserById(id string) (*model.User, error) {
+	db := database.GetConnection()
+	var user model.User
+
+	query := fmt.Sprintf("SELECT * FROM users WHERE id = '%s' LIMIT 1", id)
+	result := db.Raw(query).Scan(&user)
 	if result.Error != nil {
 		return nil, result.Error
 	} else {
