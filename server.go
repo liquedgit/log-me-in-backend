@@ -14,7 +14,7 @@ func main() {
 	database.AutoMigrate()
 	router.SetupRoutes(app)
 
-	err := app.Listen("127.0.0.1:1234")
+	err := app.Listen("0.0.0.0:1234")
 	if err != nil {
 		panic(err)
 	}
